@@ -19,10 +19,15 @@
     }
 
     .pergunta {
+      display: none;
       margin-bottom: 30px;
       background: #1a1a1a;
       padding: 20px;
       border-radius: 12px;
+    }
+
+    .pergunta.ativa {
+      display: block;
     }
 
     .respostas button {
@@ -50,6 +55,7 @@
       border-radius: 8px;
       animation: pulse 2s infinite;
       text-decoration: none;
+      display: none;
     }
 
     @keyframes pulse {
@@ -60,35 +66,56 @@
   </style>
 </head>
 <body>
+
   <h1>🚀 Descubra se o Aviator Bot é pra você!</h1>
 
-  <div class="pergunta">
+  <div class="pergunta ativa">
     <h2>Você já perdeu dinheiro demais no Aviator?</h2>
     <div class="respostas">
-      <button>Sim, sempre perco</button>
-      <button>Quase nunca ganho</button>
-      <button>Quero virar o jogo</button>
+      <button onclick="proximaPergunta()">Sim, sempre perco</button>
+      <button onclick="proximaPergunta()">Quase nunca ganho</button>
+      <button onclick="proximaPergunta()">Quero virar o jogo</button>
     </div>
   </div>
 
   <div class="pergunta">
     <h2>Quanto pretende começar a investir com o Bot?</h2>
     <div class="respostas">
-      <button>1000MT</button>
-      <button>200MT</button>
-      <button>500MT</button>
+      <button onclick="proximaPergunta()">500MT</button>
+      <button onclick="proximaPergunta()">200MT</button>
+      <button onclick="proximaPergunta()">1000MT</button>
     </div>
   </div>
 
   <div class="pergunta">
     <h2>Quanto deseja ganhar por dia?</h2>
     <div class="respostas">
-      <button>2.000MT</button>
-      <button>5.000MT</button>
-      <button>500.000MT</button>
+      <button onclick="finalizarQuiz()">3.000MT</button>
+      <button onclick="finalizarQuiz()">12.000MT</button>
+      <button onclick="finalizarQuiz()">500.000MT</button>
     </div>
   </div>
 
-  <a href="vendas.html" class="botao-final">Começar Agora com o Aviator Bot 🚀</a>
+  <a id="botaoFinal" href="vendas.html" class="botao-final">Começar Agora com o Aviator Bot 🚀</a>
+
+  <script>
+    let perguntaAtual = 0;
+    const perguntas = document.querySelectorAll('.pergunta');
+    const botaoFinal = document.getElementById('botaoFinal');
+
+    function proximaPergunta() {
+      perguntas[perguntaAtual].classList.remove('ativa');
+      perguntaAtual++;
+      if (perguntaAtual < perguntas.length) {
+        perguntas[perguntaAtual].classList.add('ativa');
+      }
+    }
+
+    function finalizarQuiz() {
+      perguntas[perguntaAtual].classList.remove('ativa');
+      botaoFinal.style.display = 'inline-block';
+    }
+  </script>
+
 </body>
 </html>
