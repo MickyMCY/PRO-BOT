@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz Aviator Bot</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #ff4747;
+      margin-bottom: 30px;
+    }
+
+    .pergunta {
+      margin-bottom: 30px;
+    }
+
+    .pergunta h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .respostas button {
+      background-color: #1a1a1a;
+      border: 2px solid #28c739;
+      color: white;
+      font-size: 18px;
+      padding: 12px 24px;
+      margin: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .respostas button:hover {
+      background-color: #28c739;
+    }
+
+    .botao-final {
+      display: none;
+      background-color: #28c739;
+      color: white;
+      font-size: 20px;
+      padding: 15px 30px;
+      border-radius: 10px;
+      margin-top: 30px;
+      animation: pulse 2s infinite;
+      text-decoration: none;
+      border: none;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.07); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🤖 Será que o Aviator Bot serve para ti?</h1>
+
+  <div class="pergunta" id="p1">
+    <h2>❌ Já perdeste muito dinheiro no Aviator?</h2>
+    <div class="respostas">
+      <button onclick="proximaPergunta('p1')">Sim, sempre perco</button>
+      <button onclick="proximaPergunta('p1')">Sim, não aguento mais</button>
+      <button onclick="proximaPergunta('p1')">Perco tudo o que ganho</button>
+    </div>
+  </div>
+
+  <div class="pergunta" id="p2" style="display:none;">
+    <h2>💰 Com quanto vais começar depois de comprar o BOT?</h2>
+    <div class="respostas">
+      <button onclick="proximaPergunta('p2')">200MT</button>
+      <button onclick="proximaPergunta('p2')">500MT</button>
+      <button onclick="proximaPergunta('p2')">100MT</button>
+    </div>
+  </div>
+
+  <div class="pergunta" id="p3" style="display:none;">
+    <h2>📈 Quanto desejas fazer por dia com o Bot?</h2>
+    <div class="respostas">
+      <button onclick="mostrarBotaoFinal()">2.000MT</button>
+      <button onclick="mostrarBotaoFinal()">5.000MT</button>
+      <button onclick="mostrarBotaoFinal()">500.000MT</button>
+    </div>
+  </div>
+
+  <a href="index.html">
+    <button class="botao-final" id="final">🚀 Começar agora com o Aviator Bot</button>
+  </a>
+
+  <script>
+    function proximaPergunta(atual) {
+      document.getElementById(atual).style.display = "none";
+      if (atual === "p1") document.getElementById("p2").style.display = "block";
+      if (atual === "p2") document.getElementById("p3").style.display = "block";
+    }
+
+    function mostrarBotaoFinal() {
+      document.getElementById("p3").style.display = "none";
+      document.getElementById("final").style.display = "inline-block";
+    }
+  </script>
+
+</body>
+</html>
