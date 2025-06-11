@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quiz Aviator Bot</title>
   <style>
     body {
       background-color: #0e0e0e;
       color: white;
-      font-family: Arial, sans-serif;
-      padding: 20px;
+      font-family: 'Arial', sans-serif;
       text-align: center;
+      padding: 30px;
     }
 
     h1 {
+      font-size: 28px;
       color: #ff4747;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
 
     .pergunta {
       display: none;
       margin-bottom: 30px;
-      background: #1a1a1a;
-      padding: 20px;
-      border-radius: 12px;
     }
 
     .pergunta.ativa {
@@ -31,89 +29,98 @@
     }
 
     .respostas button {
-      margin: 10px;
-      padding: 12px 24px;
-      font-size: 16px;
-      background-color: #28c739;
+      display: block;
+      background-color: #222;
       color: white;
-      border: none;
-      border-radius: 6px;
+      border: 2px solid #444;
+      border-radius: 10px;
+      padding: 15px;
+      font-size: 18px;
+      margin: 10px auto;
+      width: 80%;
       cursor: pointer;
+      transition: all 0.3s ease;
     }
 
     .respostas button:hover {
-      background-color: #1aa22d;
+      background-color: #28c739;
+      transform: scale(1.05);
     }
 
-    .botao-final {
-      margin-top: 30px;
+    #botaoFinal {
+      background-color: #28c739;
       padding: 15px 30px;
-      font-size: 18px;
-      background-color: #ff4747;
-      color: white;
-      border: none;
+      font-size: 20px;
       border-radius: 8px;
+      border: none;
+      cursor: pointer;
       animation: pulse 2s infinite;
-      text-decoration: none;
-      display: none;
+      margin-top: 20px;
     }
 
     @keyframes pulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.07); }
+      50% { transform: scale(1.08); }
       100% { transform: scale(1); }
     }
   </style>
 </head>
 <body>
 
-  <h1>🚀 Descubra se o Aviator Bot é pra você!</h1>
+  <h1>📊 Responde ao Quiz e Descobre o Poder do Aviator Bot</h1>
 
-  <div class="pergunta ativa">
-    <h2>Você já perdeu dinheiro demais no Aviator?</h2>
+  <div class="pergunta ativa" id="p1">
+    <h2>❌ Nunca ganho no Aviator...</h2>
     <div class="respostas">
-      <button onclick="proximaPergunta()">Sim, sempre perco</button>
-      <button onclick="proximaPergunta()">Quase nunca ganho</button>
-      <button onclick="proximaPergunta()">Quero virar o jogo</button>
+      <button onclick="proximaPergunta()">Sempre perco dinheiro com Aviator</button>
+      <button onclick="proximaPergunta()">Aposto certo e mesmo assim perco</button>
+      <button onclick="proximaPergunta()">Não aguento mais perder dinheiro</button>
     </div>
   </div>
 
-  <div class="pergunta">
-    <h2>Quanto pretende começar a investir com o Bot?</h2>
+  <div class="pergunta" id="p2">
+    <h2>💸 Quanto você pretende investir ao ativar o Bot?</h2>
     <div class="respostas">
-      <button onclick="proximaPergunta()">500MT</button>
+      <button onclick="proximaPergunta()">100MT</button>
       <button onclick="proximaPergunta()">200MT</button>
-      <button onclick="proximaPergunta()">1000MT</button>
+      <button onclick="proximaPergunta()">500MT</button>
     </div>
   </div>
 
-  <div class="pergunta">
-    <h2>Quanto deseja ganhar por dia?</h2>
+  <div class="pergunta" id="p3">
+    <h2>🚀 Quanto quer lucrar por dia com o Bot?</h2>
     <div class="respostas">
-      <button onclick="finalizarQuiz()">3.000MT</button>
-      <button onclick="finalizarQuiz()">12.000MT</button>
-      <button onclick="finalizarQuiz()">500.000MT</button>
+      <button onclick="proximaPergunta()">2.000MT por dia</button>
+      <button onclick="proximaPergunta()">5.000MT por dia</button>
+      <button onclick="proximaPergunta()">500.000MT por dia!</button>
     </div>
   </div>
 
-  <a id="botaoFinal" href="vendas.html" class="botao-final">Começar Agora com o Aviator Bot 🚀</a>
+  <div class="pergunta" id="p4">
+    <h2>🤖 Está preparado para receber previsões quase assustadoras com 95% de acerto?</h2>
+    <div class="respostas">
+      <button onclick="mostrarBotaoFinal()">Sim, quero mudar minha vida!</button>
+      <button onclick="mostrarBotaoFinal()">Pronto para começar hoje!</button>
+      <button onclick="mostrarBotaoFinal()">Estou cansado de perder!</button>
+    </div>
+  </div>
+
+  <a href="pagina_video.html">
+    <button id="botaoFinal" style="display: none;">✅ Estou pronto!</button>
+  </a>
 
   <script>
-    let perguntaAtual = 0;
-    const perguntas = document.querySelectorAll('.pergunta');
-    const botaoFinal = document.getElementById('botaoFinal');
+    let perguntaAtual = 1;
 
     function proximaPergunta() {
-      perguntas[perguntaAtual].classList.remove('ativa');
+      document.getElementById("p" + perguntaAtual).classList.remove("ativa");
       perguntaAtual++;
-      if (perguntaAtual < perguntas.length) {
-        perguntas[perguntaAtual].classList.add('ativa');
-      }
+      document.getElementById("p" + perguntaAtual).classList.add("ativa");
     }
 
-    function finalizarQuiz() {
-      perguntas[perguntaAtual].classList.remove('ativa');
-      botaoFinal.style.display = 'inline-block';
+    function mostrarBotaoFinal() {
+      document.getElementById("p" + perguntaAtual).classList.remove("ativa");
+      document.getElementById("botaoFinal").style.display = "inline-block";
     }
   </script>
 
