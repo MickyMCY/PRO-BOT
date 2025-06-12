@@ -121,19 +121,25 @@
       left: 50%;
       transform: translateX(-50%);
       background: rgba(30, 30, 30, 0.95);
-      padding: 12px 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #28c739;
+      padding: 14px 35px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px #28c739;
       color: white;
       font-size: 16px;
       font-weight: bold;
       display: none;
       z-index: 9999;
+      min-width: 380px;
+      max-width: 90vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
     }
 
     .notificacao.show {
       display: block;
-      animation: aparecer 1.5s ease-in-out;
+      animation: aparecer 2s ease-in-out;
     }
 
     @keyframes aparecer {
@@ -222,23 +228,24 @@
       });
     }
 
-    <script>
-  // Mensagens flutuantes de lucro
-  const nomes = ["João.M", "Kelven.B", "Carlos.S", "Dário.T", "Nito.R", "Jorge.A"];
-  const casas = ["888bet", "Elephantbet", "Premierbet", "Betway", "Hollywoodbet", "Placard", "Winnerbet"];
+    // Mensagens flutuantes de lucro
+    const nomes = ["João.M", "Kelven.B", "Carlos.S", "Dário.T", "Nito.R", "Jorge.A", "Salvador.H", "Mauro.X"];
+    const casas = ["888bet", "Elephantbet", "Premierbet", "Betway", "Hollywoodbet", "Placard", "Winnerbet"];
 
-  function gerarMensagem() {
-    const nome = nomes[Math.floor(Math.random() * nomes.length)];
-    const casa = casas[Math.floor(Math.random() * casas.length)];
-    const valor = (Math.random() * 100000 + 500).toFixed(3).replace(/\.?0+$/, '');
-    return `🎰 ${nome} lucrou ${valor}MT com o bot agora na ${casa}`;
-  }
+    function gerarMensagem() {
+      const nome = nomes[Math.floor(Math.random() * nomes.length)];
+      const casa = casas[Math.floor(Math.random() * casas.length)];
+      const valor = (Math.random() * 100000 + 500).toFixed(3).replace('.', ',');
+      return `🎰 ${nome} lucrou ${valor}MT usando o bot na ${casa}`;
+    }
 
-  const notificacao = document.getElementById("notificacao-balao");
+    const notificacao = document.getElementById("notificacao-balao");
 
-  setInterval(() => {
-    notificacao.innerText = gerarMensagem();
-    notificacao.classList.add("show");
-    setTimeout(() => notificacao.classList.remove("show"), 2000); // visível por 2s
-  }, 20000); // aparece a cada 20s
-</script>
+    setInterval(() => {
+      notificacao.innerText = gerarMensagem();
+      notificacao.classList.add("show");
+      setTimeout(() => notificacao.classList.remove("show"), 2000);
+    }, 2000); // aparece a cada 2 segundos
+  </script>
+</body>
+</html>
