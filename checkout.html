@@ -11,8 +11,6 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 30px 20px;
-      position: relative;
-      overflow-x: hidden;
     }
 
     h1 {
@@ -30,37 +28,35 @@
       font-size: 18px;
     }
 
-    .numero-box {
-      background-color: #222;
-      padding: 15px;
+    .numero-copiavel {
+      background-color: #292929;
+      padding: 12px;
       border-radius: 10px;
-      border: 1px solid #00ffcc;
       margin: 15px 0;
-    }
-
-    .numero-box strong {
-      font-size: 22px;
-      color: #00ffcc;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .nome-carteira {
-      font-size: 16px;
-      color: #999;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .copiar-btn {
-      background-color: #00ffcc;
-      color: black;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      font-size: 20px;
       font-weight: bold;
-      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #00ffcc;
+      box-shadow: 0 0 12px rgba(0, 255, 204, 0.3);
+    }
+
+    .numero-copiavel button {
+      background: #00ffcc;
+      border: none;
+      color: #0e0e0e;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .nome-conta {
+      font-size: 18px;
+      margin-top: 5px;
+      color: #aaa;
     }
 
     img {
@@ -81,21 +77,11 @@
       margin-top: 20px;
       animation: pulse 1.8s infinite;
       box-shadow: 0 0 15px rgba(40, 199, 57, 0.6);
+      transition: background-color 0.3s ease;
     }
 
     .botao-checkout:hover {
       background-color: #1aa22d;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 10px rgba(40, 199, 57, 0.4); }
-      50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(40, 199, 57, 0.9); }
-      100% { transform: scale(1); box-shadow: 0 0 10px rgba(40, 199, 57, 0.4); }
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.2; }
     }
 
     .alerta {
@@ -118,29 +104,42 @@
       margin-top: 10px;
     }
 
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 10px rgba(40, 199, 57, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(40, 199, 57, 0.9); }
+      100% { transform: scale(1); box-shadow: 0 0 10px rgba(40, 199, 57, 0.4); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
     .notificacao {
       position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background-color: #181818;
-      border-left: 4px solid #00ffcc;
-      padding: 12px 18px;
-      border-radius: 10px;
-      box-shadow: 0 0 12px rgba(0, 255, 204, 0.4);
-      font-size: 16px;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(30, 30, 30, 0.95);
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #28c739;
       color: white;
-      opacity: 0;
-      pointer-events: none;
-      animation: fadeInOut 3s ease-in-out infinite;
-      max-width: 300px;
+      font-size: 16px;
+      font-weight: bold;
+      display: none;
       z-index: 9999;
     }
 
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateY(20px); }
-      10% { opacity: 1; transform: translateY(0); }
-      60% { opacity: 1; }
-      100% { opacity: 0; transform: translateY(20px); }
+    .notificacao.show {
+      display: block;
+      animation: aparecer 1.5s ease-in-out;
+    }
+
+    @keyframes aparecer {
+      0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      50% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
     }
   </style>
 </head>
@@ -164,11 +163,12 @@
   <img src="bot.jpg" alt="Imagem do Bot Aviator" />
 
   <div class="info-pagamento">
-    <div class="numero-box">
-      <strong>📱 867145774</strong>
-      <div class="nome-carteira">NOME: CELESTE</div>
-      <button class="copiar-btn" onclick="copiarTexto()">📋 Copiar Número</button>
+    <p style="font-size: 20px; color: #00ffcc;"><strong>📱 Número para pagamento:</strong></p>
+    <div class="numero-copiavel">
+      <span id="numero">867145774</span>
+      <button onclick="copiarNumero()">Copiar</button>
     </div>
+    <p class="nome-conta">Nome na conta: <strong>CELESTE</strong></p>
 
     <div style="margin: 15px 0;">
       <p style="margin: 0; font-size: 18px; color: #ff4b4b; text-decoration: line-through;">Preço normal: 2499MT</p>
@@ -184,8 +184,7 @@
 
   <p id="mensagem-redirect" style="margin-top: 15px; color: #ccc;"></p>
 
-  <!-- Notificação flutuante -->
-  <div class="notificacao" id="notificacao"></div>
+  <div class="notificacao" id="notificacao-balao"></div>
 
   <script>
     // Contador
@@ -200,6 +199,7 @@
         const minutos = Math.floor(tempo / 60);
         const segundos = tempo % 60;
         contador.innerText = `Tempo restante: ${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+
         if (tempo % 30 === 0 && vagas > 1) {
           vagas--;
           vagasSpan.innerText = vagas;
@@ -215,25 +215,30 @@
       document.getElementById("mensagem-redirect").innerText = "🔄 Redirecionando para confirmação...";
     }
 
-    function copiarTexto() {
-      navigator.clipboard.writeText("867145774").then(() => {
-        alert("Número copiado com sucesso!");
+    function copiarNumero() {
+      const numero = document.getElementById("numero").innerText;
+      navigator.clipboard.writeText(numero).then(() => {
+        alert("Número copiado: " + numero);
       });
     }
 
-    // Notificações automáticas
-    const nomes = ["Kelven.M", "João.M", "Carlos.J", "Ney.C", "Bruno.T", "Mateus.F", "Lucio.Z", "Leandro.A"];
+    // Mensagens flutuantes de lucro
+    const nomes = ["João.M", "Kelven.B", "Carlos.S", "Dário.T", "Nito.R", "Jorge.A"];
     const casas = ["888bet", "Elephantbet", "Premierbet", "Betway", "Hollywoodbet", "Placard", "Winnerbet"];
 
-    function gerarNotificacao() {
+    function gerarMensagem() {
       const nome = nomes[Math.floor(Math.random() * nomes.length)];
       const casa = casas[Math.floor(Math.random() * casas.length)];
-      const valor = (Math.random() * (300000 - 5000) + 5000).toFixed(3).replace(/0+$/, "");
-      const notificacao = document.getElementById("notificacao");
-      notificacao.innerHTML = `🎰 ${nome} lucrou ${valor}MT com o bot na ${casa}`;
+      const valor = (Math.random() * 100000 + 500).toFixed(3).replace(/\.?0+$/, '');
+      return `🎰 ${nome} lucrou ${valor}MT com o bot agora na ${casa}`;
     }
 
-    setInterval(gerarNotificacao, 7000); // A cada 7s
+    const notificacao = document.getElementById("notificacao-balao");
+    setInterval(() => {
+      notificacao.innerText = gerarMensagem();
+      notificacao.classList.add("show");
+      setTimeout(() => notificacao.classList.remove("show"), 1500);
+    }, 7000);
   </script>
 </body>
 </html>
