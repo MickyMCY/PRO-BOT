@@ -28,181 +28,10 @@
       font-size: 18px;
     }
 
-    .botao-checkout {
-      display: inline-block;
-      background-color: #28c739;
-      color: white;
-      font-size: 22px;
-      padding: 20px 40px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 20px;
-      animation: pulse 1.8s infinite;
-      box-shadow: 0 0 15px rgba(40, 199, 57, 0.6);
-      transition: background-color 0.3s ease;
-    }
-
-    .botao-checkout:hover {
-      background-color: #1aa22d;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 10px rgba(40, 199, 57, 0.4); }
-      50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(40, 199, 57, 0.9); }
-      100% { transform: scale(1); box-shadow: 0 0 10px rgba(40, 199, 57, 0.4); }
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.2; }
-    }
-
-    .alerta {
-      font-size: 20px;
-      color: #ff4747;
-      animation: blink 1s infinite;
-      margin-top: 15px;
-    }
-
-    #contador {
-      font-size: 24px;
-      margin-top: 10px;
-      font-weight: bold;
-      color: #ffde59;
-    }
-
-    #vagas {
-      font-size: 18px;
-      color: #00ffcc;
-      margin-top: 10px;
-    }
-
-    /* Carrossel */
-    .carrossel {
-      max-width: 320px;
-      margin: 20px auto;
-      overflow: hidden;
+    img {
+      width: 300px;
       border-radius: 10px;
-      position: relative;
-    }
-
-    .carrossel-imagens {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .carrossel img {
-      width: 100%;
-      border-radius: 10px;
-      flex-shrink: 0;
-    }
-  </style>
-</head>
-<body>
-  <h1>Pagamento e-Mola</h1>
-  <p class="alerta">⚠️ Promoção por tempo limitado!</p>
-  <div id="contador">Tempo restante: 03:00</div>
-  <div id="vagas">⏳ Vagas restantes: <span id="vagas-numero">6</span></div>
-
-  <!-- Provas sociais - carrossel -->
-  <div class="provas">
-    <h2 style="color:#00ffcc;">📸 Clientes que já compraram:</h2>
-    <div class="carrossel">
-      <div class="carrossel-imagens" id="carrossel-imagens">
-        <img src="print1.jpg" alt="Print 1">
-        <img src="print2.jpg" alt="Print 2">
-        <img src="print3.jpg" alt="Print 3">
-        <img src="print4.jpg" alt="Print 4">
-      </div>
-    </div>
-  </div>
-
-  <img src="bot.jpg" alt="Imagem do Bot Aviator" style="width:300px; border-radius:10px; margin-bottom:20px;" />
-
-  <div class="info-pagamento">
-    <p style="font-size: 20px; color: #00ffcc;"><strong>📱 Número para pagamento (e-Mola):</strong> 867145774</p>
-    <div style="margin: 15px 0;">
-      <p style="margin: 0; font-size: 18px; color: #ff4b4b; text-decoration: line-through;">Preço normal: 2499MT</p>
-      <p style="margin: 5px 0; font-size: 26px; color: #28c739; font-weight: bold; animation: blink 1s infinite;">
-        Promoção hoje: 499MT
-      </p>
-    </div>
-    <p style="color: #ccc;">Após o pagamento, clique no botão abaixo para confirmar.</p>
-  </div>
-
-  <a href="confirmacao.html" class="botao-checkout" onclick="redirecionar()">🛒 Comprar o Bot Agora</a>
-
-  <p id="mensagem-redirect" style="margin-top: 15px; color: #ccc;"></p>
-
-  <script>
-    // Contador regressivo
-    let tempo = 180; // 3 minutos
-    const contador = document.getElementById("contador");
-    const vagasSpan = document.getElementById("vagas-numero");
-    let vagas = 6;
-
-    const intervalo = setInterval(() => {
-      if (tempo > 0) {
-        tempo--;
-        const minutos = Math.floor(tempo / 60);
-        const segundos = tempo % 60;
-        contador.innerText = `Tempo restante: ${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-
-        // Diminui vagas a cada 30s
-        if (tempo % 30 === 0 && vagas > 1) {
-          vagas--;
-          vagasSpan.innerText = vagas;
-        }
-      } else {
-        clearInterval(intervalo);
-        contador.innerText = "Tempo expirado!";
-        vagasSpan.innerText = "0";
-      }
-    }, 1000);
-
-    // Redirecionar mensagem
-    function redirecionar() {
-      document.getElementById("mensagem-redirect").innerText = "🔄 Redirecionando para confirmação...";
-    }
-
-    // Carrossel automático
-    const carrossel = document.getElementById("carrossel-imagens");
-    let index = 0;
-    setInterval(() => {
-      index = (index + 1) % 4;
-      carrossel.style.transform = `translateX(-${index * 100}%)`;
-    }, 3000);
-  </script>
-</body>
-  </html><!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Checkout - Aviator Bot PRO</title>
-  <style>
-    body {
-      background-color: #0e0e0e;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 30px 20px;
-    }
-
-    h1 {
-      font-size: 28px;
-      color: #ff4747;
-      margin-bottom: 10px;
-    }
-
-    .info-pagamento {
-      background-color: #1b1b1b;
-      padding: 15px;
-      border-radius: 10px;
-      margin: 20px auto;
-      max-width: 450px;
-      font-size: 18px;
+      margin-bottom: 20px;
     }
 
     .botao-checkout {
@@ -254,26 +83,6 @@
       color: #00ffcc;
       margin-top: 10px;
     }
-
-    /* Carrossel */
-    .carrossel {
-      max-width: 320px;
-      margin: 20px auto;
-      overflow: hidden;
-      border-radius: 10px;
-      position: relative;
-    }
-
-    .carrossel-imagens {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .carrossel img {
-      width: 100%;
-      border-radius: 10px;
-      flex-shrink: 0;
-    }
   </style>
 </head>
 <body>
@@ -282,29 +91,29 @@
   <div id="contador">Tempo restante: 03:00</div>
   <div id="vagas">⏳ Vagas restantes: <span id="vagas-numero">6</span></div>
 
-  <!-- Provas sociais - carrossel -->
+  <!-- Provas sociais -->
   <div class="provas">
     <h2 style="color:#00ffcc;">📸 Clientes que já compraram:</h2>
-    <div class="carrossel">
-      <div class="carrossel-imagens" id="carrossel-imagens">
-        <img src="print1.jpg" alt="Print 1">
-        <img src="print2.jpg" alt="Print 2">
-        <img src="print3.jpg" alt="Print 3">
-        <img src="print4.jpg" alt="Print 4">
-      </div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 25px;">
+      <img src="print1.jpg" alt="Print 1" style="width: 150px; border-radius: 8px;">
+      <img src="print2.jpg" alt="Print 2" style="width: 150px; border-radius: 8px;">
+      <img src="print3.jpg" alt="Print 3" style="width: 150px; border-radius: 8px;">
+      <img src="print4.jpg" alt="Print 4" style="width: 150px; border-radius: 8px;">
     </div>
   </div>
 
-  <img src="bot.jpg" alt="Imagem do Bot Aviator" style="width:300px; border-radius:10px; margin-bottom:20px;" />
+  <img src="bot.jpg" alt="Imagem do Bot Aviator" />
 
   <div class="info-pagamento">
     <p style="font-size: 20px; color: #00ffcc;"><strong>📱 Número para pagamento (e-Mola):</strong> 867145774</p>
+
     <div style="margin: 15px 0;">
       <p style="margin: 0; font-size: 18px; color: #ff4b4b; text-decoration: line-through;">Preço normal: 2499MT</p>
       <p style="margin: 5px 0; font-size: 26px; color: #28c739; font-weight: bold; animation: blink 1s infinite;">
         Promoção hoje: 499MT
       </p>
     </div>
+
     <p style="color: #ccc;">Após o pagamento, clique no botão abaixo para confirmar.</p>
   </div>
 
@@ -313,8 +122,8 @@
   <p id="mensagem-redirect" style="margin-top: 15px; color: #ccc;"></p>
 
   <script>
-    // Contador regressivo
-    let tempo = 180; // 3 minutos
+    // Contador de tempo
+    let tempo = 180; // 3 minutos em segundos
     const contador = document.getElementById("contador");
     const vagasSpan = document.getElementById("vagas-numero");
     let vagas = 6;
@@ -326,7 +135,6 @@
         const segundos = tempo % 60;
         contador.innerText = `Tempo restante: ${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
 
-        // Diminui vagas a cada 30s
         if (tempo % 30 === 0 && vagas > 1) {
           vagas--;
           vagasSpan.innerText = vagas;
@@ -338,18 +146,9 @@
       }
     }, 1000);
 
-    // Redirecionar mensagem
     function redirecionar() {
       document.getElementById("mensagem-redirect").innerText = "🔄 Redirecionando para confirmação...";
     }
-
-    // Carrossel automático
-    const carrossel = document.getElementById("carrossel-imagens");
-    let index = 0;
-    setInterval(() => {
-      index = (index + 1) % 4;
-      carrossel.style.transform = `translateX(-${index * 100}%)`;
-    }, 3000);
   </script>
 </body>
 </html>
