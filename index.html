@@ -56,6 +56,7 @@
       cursor: pointer;
       animation: pulse 2s infinite;
       margin-top: 20px;
+      display: none;
     }
 
     @keyframes pulse {
@@ -74,7 +75,7 @@
     <div class="respostas">
       <button onclick="proximaPergunta()">Sempre perco dinheiro com Aviator</button>
       <button onclick="proximaPergunta()">Sempre lucro, mas perco tudo por ganância</button>
-      <button onclick="proximaPergunta()">Sim,Já tive lucros, mas nunca consegui parar na hora certa</button>
+      <button onclick="proximaPergunta()">Já tive lucros, mas nunca consegui parar na hora certa</button>
     </div>
   </div>
 
@@ -106,10 +107,11 @@
   </div>
 
   <a href="pagina_video.html">
-    <button id="vendas.html" style="display: none;">✅ Estou pronto!</button>
+    <button id="botaoFinal">✅ Estou pronto!</button>
   </a>
 
   <script>
+    
     let perguntaAtual = 1;
 
     function proximaPergunta() {
