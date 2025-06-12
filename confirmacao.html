@@ -56,6 +56,27 @@
       box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     }
 
+    .flutuante {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(40, 199, 57, 0.15);
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      box-shadow: 0 0 12px rgba(40, 199, 57, 0.4);
+      animation: aparecerDesaparecer 7s infinite;
+    }
+
+    @keyframes aparecerDesaparecer {
+      0% { opacity: 0; transform: translateY(10px) translateX(-50%); }
+      10% { opacity: 1; transform: translateY(0) translateX(-50%); }
+      80% { opacity: 1; transform: translateY(0) translateX(-50%); }
+      100% { opacity: 0; transform: translateY(10px) translateX(-50%); }
+    }
+
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
@@ -66,67 +87,7 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
     }
-
-    /* Notificação flutuante */
-    .notificacao {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background-color: #1b1b1b;
-      color: #e3ffe3;
-      padding: 12px 18px;
-      border-left: 5px solid #28c739;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(40, 199, 57, 0.3);
-      font-size: 16px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.4s, transform 0.4s;
-      z-index: 9999;
-      pointer-events: none;
-    }
-
-    .notificacao.mostrar {
-      opacity: 1;
-      transform: translateY(0);
-    }
   </style>
-
-  <script>
-    let vagas = 6;
-    function reduzirVagas() {
-      const vagasElem = document.getElementById('vagas');
-      const intervalo = setInterval(() => {
-        if (vagas > 1) {
-          vagas--;
-          vagasElem.textContent = vagas;
-        } else {
-          clearInterval(intervalo); // Para em 1 vaga
-        }
-      }, 4000); // A cada 4 segundos
-    }
-
-    // Notificação flutuante
-    function iniciarNotificacoes() {
-      const noti = document.createElement("div");
-      noti.className = "notificacao";
-      noti.id = "notificacao";
-      noti.textContent = "📦 Alguém acabou de comprar o Bot Aviator!";
-      document.body.appendChild(noti);
-
-      setInterval(() => {
-        noti.classList.add("mostrar");
-        setTimeout(() => {
-          noti.classList.remove("mostrar");
-        }, 2000);
-      }, 6000);
-    }
-
-    window.onload = function () {
-      reduzirVagas();
-      iniciarNotificacoes();
-    };
-  </script>
 </head>
 <body>
   <h1>✅ Confirmação de Pagamento</h1>
@@ -143,5 +104,28 @@
      class="botao">
      📲 Enviar Confirmação via WhatsApp
   </a>
+
+  <!-- Mensagem flutuante simulada -->
+  <div class="flutuante" id="mensagem-flutuante">📦 Alguém acabou de confirmar o pagamento!</div>
+
+  <script>
+    // Simulação de vagas restantes
+    let vagas = 6;
+    const vagasElem = document.getElementById('vagas');
+
+    function reduzirVagas() {
+      const intervalo = setInterval(() => {
+        if (vagas > 1) {
+          vagas--;
+          vagasElem.textContent = vagas;
+        } else {
+          clearInterval(intervalo); // Para em 1 vaga
+        }
+      }, 4000); // Reduz a cada 4 segundos
+    }
+
+    // Iniciar função ao carregar a página
+    window.onload = reduzirVagas;
+  </script>
 </body>
 </html>
