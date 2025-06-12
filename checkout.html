@@ -244,8 +244,8 @@
     setInterval(() => {
       notificacao.innerText = gerarMensagem();
       notificacao.classList.add("show");
-      setTimeout(() => notificacao.classList.remove("show"), 2000);
-    }, 2000); // aparece a cada 2 segundos
+      setTimeout(() => notificacao.classList.remove("show"), 2000); // visível por 2 segundos
+    }, 10000); // aparece a cada 10 segundos
   </script>
 </body>
 </html>
