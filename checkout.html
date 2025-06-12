@@ -222,23 +222,23 @@
       });
     }
 
-    // Mensagens flutuantes de lucro
-    const nomes = ["João.M", "Kelven.B", "Carlos.S", "Dário.T", "Nito.R", "Jorge.A"];
-    const casas = ["888bet", "Elephantbet", "Premierbet", "Betway", "Hollywoodbet", "Placard", "Winnerbet"];
+    <script>
+  // Mensagens flutuantes de lucro
+  const nomes = ["João.M", "Kelven.B", "Carlos.S", "Dário.T", "Nito.R", "Jorge.A"];
+  const casas = ["888bet", "Elephantbet", "Premierbet", "Betway", "Hollywoodbet", "Placard", "Winnerbet"];
 
-    function gerarMensagem() {
-      const nome = nomes[Math.floor(Math.random() * nomes.length)];
-      const casa = casas[Math.floor(Math.random() * casas.length)];
-      const valor = (Math.random() * 100000 + 500).toFixed(3).replace(/\.?0+$/, '');
-      return `🎰 ${nome} lucrou ${valor}MT com o bot agora na ${casa}`;
-    }
+  function gerarMensagem() {
+    const nome = nomes[Math.floor(Math.random() * nomes.length)];
+    const casa = casas[Math.floor(Math.random() * casas.length)];
+    const valor = (Math.random() * 100000 + 500).toFixed(3).replace(/\.?0+$/, '');
+    return `🎰 ${nome} lucrou ${valor}MT com o bot agora na ${casa}`;
+  }
 
-    const notificacao = document.getElementById("notificacao-balao");
-    setInterval(() => {
-      notificacao.innerText = gerarMensagem();
-      notificacao.classList.add("show");
-      setTimeout(() => notificacao.classList.remove("show"), 1500);
-    }, 7000);
-  </script>
-</body>
-</html>
+  const notificacao = document.getElementById("notificacao-balao");
+
+  setInterval(() => {
+    notificacao.innerText = gerarMensagem();
+    notificacao.classList.add("show");
+    setTimeout(() => notificacao.classList.remove("show"), 2000); // visível por 2s
+  }, 20000); // aparece a cada 20s
+</script>
