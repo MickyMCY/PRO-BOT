@@ -11,6 +11,7 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 30px 20px;
+      position: relative;
     }
 
     h1 {
@@ -83,9 +84,44 @@
       color: #00ffcc;
       margin-top: 10px;
     }
+
+    /* Balão de cliente comprando */
+    .comprando-agora {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #1b1b1b;
+      border-left: 4px solid #28c739;
+      color: #fff;
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      z-index: 999;
+      animation: fadeInOut 12s infinite;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; bottom: 10px; }
+      10% { opacity: 1; bottom: 20px; }
+      90% { opacity: 1; bottom: 20px; }
+      100% { opacity: 0; bottom: 10px; }
+    }
+
+    .topo-alerta {
+      background-color: #ff4747;
+      color: white;
+      font-weight: bold;
+      padding: 8px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      animation: blink 1.5s infinite;
+    }
   </style>
 </head>
 <body>
+  <div class="topo-alerta">🔥 Oferta relâmpago! Aproveite antes que acabe!</div>
+
   <h1>Pagamento e-Mola</h1>
   <p class="alerta">⚠️ Promoção por tempo limitado!</p>
   <div id="contador">Tempo restante: 03:00</div>
@@ -105,7 +141,10 @@
   <img src="bot.jpg" alt="Imagem do Bot Aviator" />
 
   <div class="info-pagamento">
-    <p style="font-size: 20px; color: #00ffcc;"><strong>📱 Número para pagamento (e-Mola):</strong> 867145774</p>
+    <p style="font-size: 20px; color: #00ffcc;"><strong>📱 Número para pagamento (e-Mola):</strong> <span id="numero">867145774</span></p>
+    <button onclick="copiarNumero()" style="margin-top: 10px; background-color:#444; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
+      📋 Copiar número
+    </button>
 
     <div style="margin: 15px 0;">
       <p style="margin: 0; font-size: 18px; color: #ff4b4b; text-decoration: line-through;">Preço normal: 2499MT</p>
@@ -121,9 +160,13 @@
 
   <p id="mensagem-redirect" style="margin-top: 15px; color: #ccc;"></p>
 
+  <div class="comprando-agora">
+    📦 Alguém acabou de comprar o Bot PRO!
+  </div>
+
   <script>
     // Contador de tempo
-    let tempo = 180; // 3 minutos em segundos
+    let tempo = 180;
     const contador = document.getElementById("contador");
     const vagasSpan = document.getElementById("vagas-numero");
     let vagas = 6;
@@ -134,7 +177,6 @@
         const minutos = Math.floor(tempo / 60);
         const segundos = tempo % 60;
         contador.innerText = `Tempo restante: ${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-
         if (tempo % 30 === 0 && vagas > 1) {
           vagas--;
           vagasSpan.innerText = vagas;
@@ -148,6 +190,13 @@
 
     function redirecionar() {
       document.getElementById("mensagem-redirect").innerText = "🔄 Redirecionando para confirmação...";
+    }
+
+    function copiarNumero() {
+      const numero = document.getElementById("numero").innerText;
+      navigator.clipboard.writeText(numero).then(() => {
+        alert("Número copiado com sucesso!");
+      });
     }
   </script>
 </body>
