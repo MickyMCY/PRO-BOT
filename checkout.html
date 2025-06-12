@@ -24,7 +24,7 @@
       padding: 15px;
       border-radius: 10px;
       margin: 20px auto;
-      max-width: 480px;
+      max-width: 450px;
       font-size: 18px;
     }
 
@@ -84,40 +84,47 @@
       margin-top: 10px;
     }
 
-    .copy-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+    .numero-emola {
+      background-color: #000;
+      padding: 10px;
+      font-size: 22px;
+      font-weight: bold;
+      border-radius: 8px;
+      color: #00ffcc;
       margin: 10px 0;
     }
 
-    .copy-button {
-      background-color: #ff4747;
-      color: white;
+    .copiar-btn {
+      background-color: #444;
       border: none;
+      color: white;
       padding: 8px 14px;
       border-radius: 6px;
       cursor: pointer;
-      font-weight: bold;
+      margin-left: 10px;
     }
 
-    .copy-button:hover {
-      background-color: #e03838;
+    .notificacao-lucro {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #1b1b1b;
+      border-left: 5px solid #28c739;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #e3ffe3;
+      box-shadow: 0 0 12px rgba(0, 255, 0, 0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s, transform 0.5s;
+      z-index: 9999;
+      pointer-events: none;
     }
 
-    .mensagem-cliente {
-      margin-top: 20px;
-      background-color: #1e1e1e;
-      border-left: 4px solid #28c739;
-      padding: 10px;
-      max-width: 400px;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 6px;
-      font-size: 16px;
-      color: #b3ffb3;
-      animation: blink 3s infinite;
+    .notificacao-lucro.mostrar {
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
@@ -126,10 +133,6 @@
   <p class="alerta">⚠️ Promoção por tempo limitado!</p>
   <div id="contador">Tempo restante: 03:00</div>
   <div id="vagas">⏳ Vagas restantes: <span id="vagas-numero">6</span></div>
-
-  <div class="mensagem-cliente" id="mensagem-cliente">
-    João.M lucrou 20.431MT com o Bot agora na 888bet!
-  </div>
 
   <!-- Provas sociais -->
   <div class="provas">
@@ -146,13 +149,11 @@
 
   <div class="info-pagamento">
     <p style="font-size: 20px; color: #00ffcc;"><strong>📱 Número para pagamento (e-Mola):</strong></p>
-
-    <div class="copy-container">
-      <span id="numero-emola" style="font-size: 22px; font-weight: bold;">867145774</span>
-      <button class="copy-button" onclick="copiarNumero()">Copiar</button>
+    <div class="numero-emola">
+      867145774
+      <button class="copiar-btn" onclick="copiarNumero()">Copiar</button>
     </div>
-
-    <p style="color: #ccc; font-size: 16px;">Nome da conta: <strong style="color: #ffffff;">CELESTE</strong></p>
+    <p style="color: #ccc;">Nome da carteira: <strong style="color: #ffffff;">CELESTE</strong></p>
 
     <div style="margin: 15px 0;">
       <p style="margin: 0; font-size: 18px; color: #ff4b4b; text-decoration: line-through;">Preço normal: 2499MT</p>
@@ -164,12 +165,21 @@
     <p style="color: #ccc;">Após o pagamento, clique no botão abaixo para confirmar.</p>
   </div>
 
-  <a href="confirmacao.html" class="botao-checkout" onclick="redirecionar()">🛒 Quero Lucrar com o Bot Agora</a>
+  <a href="confirmacao.html" class="botao-checkout" onclick="redirecionar()">🛒 Comprar o Bot Agora</a>
 
   <p id="mensagem-redirect" style="margin-top: 15px; color: #ccc;"></p>
 
+  <div class="notificacao-lucro" id="notificacaoLucro"></div>
+
   <script>
-    // Contador
+    // Botão copiar
+    function copiarNumero() {
+      const texto = "867145774";
+      navigator.clipboard.writeText(texto);
+      alert("Número copiado: " + texto);
+    }
+
+    // Contador de tempo e vagas
     let tempo = 180;
     const contador = document.getElementById("contador");
     const vagasSpan = document.getElementById("vagas-numero");
@@ -196,30 +206,32 @@
       document.getElementById("mensagem-redirect").innerText = "🔄 Redirecionando para confirmação...";
     }
 
-    function copiarNumero() {
-      const numero = document.getElementById("numero-emola").innerText;
-      navigator.clipboard.writeText(numero);
-      alert("Número copiado: " + numero);
-    }
+    // Notificações de lucros
+    const nomesLucro = ["João.M", "Kelven.P", "Rui.J", "Manuel.T", "Carlos.S", "Paulo.M", "Bruno.V", "Mário.N", "Luis.C"];
+    const casasLucro = ["888bet", "Elephantbet", "Premierbet", "Betway", "Hollywoodbet", "Placard", "Winnerbet"];
+    const notificacao = document.getElementById("notificacaoLucro");
 
-    // Mensagem aleatória de lucro
-    const nomes = ["João.M", "Kelven.P", "Rui.J", "Manuel.T", "Carlos.S", "Paulo.M", "Bruno.V"];
-    const casas = ["888bet", "Elephantbet", "Premierbet", "Betway", "Hollywoodbet", "Placard", "Winnerbet"];
-
-    function gerarValorAleatorio() {
-      const inteiro = Math.floor(Math.random() * 500000) + 500;
+    function valorAleatorio() {
+      const inteiro = Math.floor(Math.random() * 450000) + 300;
       const decimal = Math.floor(Math.random() * 90) + 10;
       return `${inteiro}.${decimal}`;
     }
 
-    function atualizarMensagemCliente() {
-      const nome = nomes[Math.floor(Math.random() * nomes.length)];
-      const casa = casas[Math.floor(Math.random() * casas.length)];
-      const valor = gerarValorAleatorio();
-      document.getElementById("mensagem-cliente").innerText = `${nome} lucrou ${valor}MT com o Bot agora na ${casa}!`;
+    function mostrarNotificacao() {
+      const nome = nomesLucro[Math.floor(Math.random() * nomesLucro.length)];
+      const casa = casasLucro[Math.floor(Math.random() * casasLucro.length)];
+      const valor = valorAleatorio();
+      notificacao.textContent = `${nome} lucrou ${valor}MT com o Bot agora na ${casa}!`;
+      notificacao.classList.add("mostrar");
+
+      setTimeout(() => {
+        notificacao.classList.remove("mostrar");
+      }, 1500);
     }
 
-    atualizarMensagemCliente();
+    setInterval(() => {
+      mostrarNotificacao();
+    }, 2000);
   </script>
 </body>
 </html>
