@@ -11,7 +11,6 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 30px 20px;
-      position: relative;
     }
 
     h1 {
@@ -25,7 +24,7 @@
       padding: 15px;
       border-radius: 10px;
       margin: 20px auto;
-      max-width: 450px;
+      max-width: 480px;
       font-size: 18px;
     }
 
@@ -85,47 +84,52 @@
       margin-top: 10px;
     }
 
-    /* Balão de cliente comprando */
-    .comprando-agora {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background-color: #1b1b1b;
-      border-left: 4px solid #28c739;
-      color: #fff;
-      padding: 12px 15px;
-      border-radius: 8px;
-      font-size: 14px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
-      z-index: 999;
-      animation: fadeInOut 12s infinite;
+    .copy-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px 0;
     }
 
-    @keyframes fadeInOut {
-      0% { opacity: 0; bottom: 10px; }
-      10% { opacity: 1; bottom: 20px; }
-      90% { opacity: 1; bottom: 20px; }
-      100% { opacity: 0; bottom: 10px; }
-    }
-
-    .topo-alerta {
+    .copy-button {
       background-color: #ff4747;
       color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
       font-weight: bold;
-      padding: 8px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      animation: blink 1.5s infinite;
+    }
+
+    .copy-button:hover {
+      background-color: #e03838;
+    }
+
+    .mensagem-cliente {
+      margin-top: 20px;
+      background-color: #1e1e1e;
+      border-left: 4px solid #28c739;
+      padding: 10px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #b3ffb3;
+      animation: blink 3s infinite;
     }
   </style>
 </head>
 <body>
-  <div class="topo-alerta">🔥 Oferta relâmpago! Aproveite antes que acabe!</div>
-
   <h1>Pagamento e-Mola</h1>
   <p class="alerta">⚠️ Promoção por tempo limitado!</p>
   <div id="contador">Tempo restante: 03:00</div>
   <div id="vagas">⏳ Vagas restantes: <span id="vagas-numero">6</span></div>
+
+  <div class="mensagem-cliente" id="mensagem-cliente">
+    João.M lucrou 20.431MT com o Bot agora na 888bet!
+  </div>
 
   <!-- Provas sociais -->
   <div class="provas">
@@ -141,10 +145,14 @@
   <img src="bot.jpg" alt="Imagem do Bot Aviator" />
 
   <div class="info-pagamento">
-    <p style="font-size: 20px; color: #00ffcc;"><strong>📱 Número para pagamento (e-Mola):</strong> <span id="numero">867145774</span></p>
-    <button onclick="copiarNumero()" style="margin-top: 10px; background-color:#444; color:white; border:none; padding:8px 16px; border-radius:6px; cursor:pointer;">
-      📋 Copiar número
-    </button>
+    <p style="font-size: 20px; color: #00ffcc;"><strong>📱 Número para pagamento (e-Mola):</strong></p>
+
+    <div class="copy-container">
+      <span id="numero-emola" style="font-size: 22px; font-weight: bold;">867145774</span>
+      <button class="copy-button" onclick="copiarNumero()">Copiar</button>
+    </div>
+
+    <p style="color: #ccc; font-size: 16px;">Nome da conta: <strong style="color: #ffffff;">CELESTE</strong></p>
 
     <div style="margin: 15px 0;">
       <p style="margin: 0; font-size: 18px; color: #ff4b4b; text-decoration: line-through;">Preço normal: 2499MT</p>
@@ -156,16 +164,12 @@
     <p style="color: #ccc;">Após o pagamento, clique no botão abaixo para confirmar.</p>
   </div>
 
-  <a href="confirmacao.html" class="botao-checkout" onclick="redirecionar()">🛒 Comprar o Bot Agora</a>
+  <a href="confirmacao.html" class="botao-checkout" onclick="redirecionar()">🛒 Quero Lucrar com o Bot Agora</a>
 
   <p id="mensagem-redirect" style="margin-top: 15px; color: #ccc;"></p>
 
-  <div class="comprando-agora">
-    📦 Alguém acabou de comprar o Bot PRO!
-  </div>
-
   <script>
-    // Contador de tempo
+    // Contador
     let tempo = 180;
     const contador = document.getElementById("contador");
     const vagasSpan = document.getElementById("vagas-numero");
@@ -193,11 +197,29 @@
     }
 
     function copiarNumero() {
-      const numero = document.getElementById("numero").innerText;
-      navigator.clipboard.writeText(numero).then(() => {
-        alert("Número copiado com sucesso!");
-      });
+      const numero = document.getElementById("numero-emola").innerText;
+      navigator.clipboard.writeText(numero);
+      alert("Número copiado: " + numero);
     }
+
+    // Mensagem aleatória de lucro
+    const nomes = ["João.M", "Kelven.P", "Rui.J", "Manuel.T", "Carlos.S", "Paulo.M", "Bruno.V"];
+    const casas = ["888bet", "Elephantbet", "Premierbet", "Betway", "Hollywoodbet", "Placard", "Winnerbet"];
+
+    function gerarValorAleatorio() {
+      const inteiro = Math.floor(Math.random() * 500000) + 500;
+      const decimal = Math.floor(Math.random() * 90) + 10;
+      return `${inteiro}.${decimal}`;
+    }
+
+    function atualizarMensagemCliente() {
+      const nome = nomes[Math.floor(Math.random() * nomes.length)];
+      const casa = casas[Math.floor(Math.random() * casas.length)];
+      const valor = gerarValorAleatorio();
+      document.getElementById("mensagem-cliente").innerText = `${nome} lucrou ${valor}MT com o Bot agora na ${casa}!`;
+    }
+
+    atualizarMensagemCliente();
   </script>
 </body>
 </html>
