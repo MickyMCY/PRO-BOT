@@ -11,6 +11,8 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 30px 20px;
+      position: relative;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -26,6 +28,39 @@
       margin: 20px auto;
       max-width: 450px;
       font-size: 18px;
+    }
+
+    .numero-box {
+      background-color: #222;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #00ffcc;
+      margin: 15px 0;
+    }
+
+    .numero-box strong {
+      font-size: 22px;
+      color: #00ffcc;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .nome-carteira {
+      font-size: 16px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .copiar-btn {
+      background-color: #00ffcc;
+      color: black;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
     }
 
     img {
@@ -46,7 +81,6 @@
       margin-top: 20px;
       animation: pulse 1.8s infinite;
       box-shadow: 0 0 15px rgba(40, 199, 57, 0.6);
-      transition: background-color 0.3s ease;
     }
 
     .botao-checkout:hover {
@@ -84,47 +118,29 @@
       margin-top: 10px;
     }
 
-    .numero-emola {
-      background-color: #000;
-      padding: 10px;
-      font-size: 22px;
-      font-weight: bold;
-      border-radius: 8px;
-      color: #00ffcc;
-      margin: 10px 0;
-    }
-
-    .copiar-btn {
-      background-color: #444;
-      border: none;
-      color: white;
-      padding: 8px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-
-    .notificacao-lucro {
+    .notificacao {
       position: fixed;
       bottom: 20px;
       left: 20px;
-      background-color: #1b1b1b;
-      border-left: 5px solid #28c739;
-      padding: 10px 15px;
-      border-radius: 8px;
-      font-size: 15px;
-      color: #e3ffe3;
-      box-shadow: 0 0 12px rgba(0, 255, 0, 0.2);
+      background-color: #181818;
+      border-left: 4px solid #00ffcc;
+      padding: 12px 18px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 255, 204, 0.4);
+      font-size: 16px;
+      color: white;
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s, transform 0.5s;
-      z-index: 9999;
       pointer-events: none;
+      animation: fadeInOut 3s ease-in-out infinite;
+      max-width: 300px;
+      z-index: 9999;
     }
 
-    .notificacao-lucro.mostrar {
-      opacity: 1;
-      transform: translateY(0);
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(20px); }
+      10% { opacity: 1; transform: translateY(0); }
+      60% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(20px); }
     }
   </style>
 </head>
@@ -148,12 +164,11 @@
   <img src="bot.jpg" alt="Imagem do Bot Aviator" />
 
   <div class="info-pagamento">
-    <p style="font-size: 20px; color: #00ffcc;"><strong>📱 Número para pagamento (e-Mola):</strong></p>
-    <div class="numero-emola">
-      867145774
-      <button class="copiar-btn" onclick="copiarNumero()">Copiar</button>
+    <div class="numero-box">
+      <strong>📱 867145774</strong>
+      <div class="nome-carteira">NOME: CELESTE</div>
+      <button class="copiar-btn" onclick="copiarTexto()">📋 Copiar Número</button>
     </div>
-    <p style="color: #ccc;">Nome da carteira: <strong style="color: #ffffff;">CELESTE</strong></p>
 
     <div style="margin: 15px 0;">
       <p style="margin: 0; font-size: 18px; color: #ff4b4b; text-decoration: line-through;">Preço normal: 2499MT</p>
@@ -169,17 +184,11 @@
 
   <p id="mensagem-redirect" style="margin-top: 15px; color: #ccc;"></p>
 
-  <div class="notificacao-lucro" id="notificacaoLucro"></div>
+  <!-- Notificação flutuante -->
+  <div class="notificacao" id="notificacao"></div>
 
   <script>
-    // Botão copiar
-    function copiarNumero() {
-      const texto = "867145774";
-      navigator.clipboard.writeText(texto);
-      alert("Número copiado: " + texto);
-    }
-
-    // Contador de tempo e vagas
+    // Contador
     let tempo = 180;
     const contador = document.getElementById("contador");
     const vagasSpan = document.getElementById("vagas-numero");
@@ -206,32 +215,25 @@
       document.getElementById("mensagem-redirect").innerText = "🔄 Redirecionando para confirmação...";
     }
 
-    // Notificações de lucros
-    const nomesLucro = ["João.M", "Kelven.P", "Rui.J", "Manuel.T", "Carlos.S", "Paulo.M", "Bruno.V", "Mário.N", "Luis.C"];
-    const casasLucro = ["888bet", "Elephantbet", "Premierbet", "Betway", "Hollywoodbet", "Placard", "Winnerbet"];
-    const notificacao = document.getElementById("notificacaoLucro");
-
-    function valorAleatorio() {
-      const inteiro = Math.floor(Math.random() * 450000) + 300;
-      const decimal = Math.floor(Math.random() * 90) + 10;
-      return `${inteiro}.${decimal}`;
+    function copiarTexto() {
+      navigator.clipboard.writeText("867145774").then(() => {
+        alert("Número copiado com sucesso!");
+      });
     }
 
-    function mostrarNotificacao() {
-      const nome = nomesLucro[Math.floor(Math.random() * nomesLucro.length)];
-      const casa = casasLucro[Math.floor(Math.random() * casasLucro.length)];
-      const valor = valorAleatorio();
-      notificacao.textContent = `${nome} lucrou ${valor}MT com o Bot agora na ${casa}!`;
-      notificacao.classList.add("mostrar");
+    // Notificações automáticas
+    const nomes = ["Kelven.M", "João.M", "Carlos.J", "Ney.C", "Bruno.T", "Mateus.F", "Lucio.Z", "Leandro.A"];
+    const casas = ["888bet", "Elephantbet", "Premierbet", "Betway", "Hollywoodbet", "Placard", "Winnerbet"];
 
-      setTimeout(() => {
-        notificacao.classList.remove("mostrar");
-      }, 1500);
+    function gerarNotificacao() {
+      const nome = nomes[Math.floor(Math.random() * nomes.length)];
+      const casa = casas[Math.floor(Math.random() * casas.length)];
+      const valor = (Math.random() * (300000 - 5000) + 5000).toFixed(3).replace(/0+$/, "");
+      const notificacao = document.getElementById("notificacao");
+      notificacao.innerHTML = `🎰 ${nome} lucrou ${valor}MT com o bot na ${casa}`;
     }
 
-    setInterval(() => {
-      mostrarNotificacao();
-    }, 2000);
+    setInterval(gerarNotificacao, 7000); // A cada 7s
   </script>
 </body>
 </html>
