@@ -61,20 +61,19 @@
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: rgba(40, 199, 57, 0.15);
+      background-color: rgba(40, 199, 57, 0.2);
       color: #ffffff;
-      padding: 12px 20px;
-      border-radius: 20px;
+      padding: 14px 30px;
+      border-radius: 25px;
       font-size: 16px;
-      box-shadow: 0 0 12px rgba(40, 199, 57, 0.4);
-      animation: aparecerDesaparecer 7s infinite;
+      box-shadow: 0 0 14px rgba(40, 199, 57, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
     }
 
-    @keyframes aparecerDesaparecer {
-      0% { opacity: 0; transform: translateY(10px) translateX(-50%); }
-      10% { opacity: 1; transform: translateY(0) translateX(-50%); }
-      80% { opacity: 1; transform: translateY(0) translateX(-50%); }
-      100% { opacity: 0; transform: translateY(10px) translateX(-50%); }
+    .flutuante.show {
+      opacity: 1;
     }
 
     @keyframes pulse {
@@ -109,23 +108,33 @@
   <div class="flutuante" id="mensagem-flutuante">📦 Alguém acabou de confirmar o pagamento!</div>
 
   <script>
-    // Simulação de vagas restantes
+    // Redução de vagas
     let vagas = 6;
     const vagasElem = document.getElementById('vagas');
-
     function reduzirVagas() {
       const intervalo = setInterval(() => {
         if (vagas > 1) {
           vagas--;
           vagasElem.textContent = vagas;
         } else {
-          clearInterval(intervalo); // Para em 1 vaga
+          clearInterval(intervalo);
         }
-      }, 4000); // Reduz a cada 4 segundos
+      }, 4000);
+    }
+    window.onload = reduzirVagas;
+
+    // Notificação flutuante
+    const msg = document.getElementById("mensagem-flutuante");
+
+    function mostrarMensagem() {
+      msg.classList.add("show");
+      setTimeout(() => {
+        msg.classList.remove("show");
+        setTimeout(mostrarMensagem, 8000); // intervalo de 8 segundos
+      }, 1600); // visível por 1.6 segundos
     }
 
-    // Iniciar função ao carregar a página
-    window.onload = reduzirVagas;
+    setTimeout(mostrarMensagem, 5000); // primeira aparece depois de 5s
   </script>
 </body>
 </html>
